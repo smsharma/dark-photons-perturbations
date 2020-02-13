@@ -9,20 +9,22 @@ by Andrea Caputo, Hongwan Liu, Siddharth Mishra-Sharma, and Joshua T. Ruderman.
 [![Dark Matter](https://img.shields.io/badge/Matter-Dark-black.svg)](./)
 [![arXiv](https://img.shields.io/badge/arXiv-2002.xxxxx%20-green.svg)](https://arxiv.org/abs/2002.xxxxx)
 
-![Illustration of photon/dark photon passage through inhomogeneities inhomogeneities.](paper/draft-letter/plots/perturbations_web.png)
+![Illustration of photon/dark photon passage through inhomogeneities.](paper/draft-letter/plots/perturbations_web.png)
 
 
 ## Abstract
 
 A dark photon may kinetically mix with the ordinary photon, inducing oscillations with observable imprints on cosmology.  Oscillations are resonantly enhanced if the dark photon mass equals the ordinary photon plasma mass, which tracks the free electron number density.  Previous studies have assumed a homogeneous Universe; in this Letter, we introduce for the first time an analytic formalism for treating resonant oscillations in the presence of inhomogeneities of the photon plasma mass.  We apply our formalism to determine constraints from Cosmic Microwave Background photons oscillating into dark photons, and from heating of the primordial plasma due to dark photon dark matter converting into low-energy photons. Including the effect of inhomogeneities demonstrates that prior homogeneous constraints are not conservative, and simultaneously extends current experimental limits into a vast new parameter space.
 
-## Code and Results
+## Main Results
+
+The data points for the fiducial constraints presented in the paper are provided in [data/constraints](data/constraints), and a Jupyter notebook plotting these is provided in [10_fiducial_constraints.ipynb](notebooks/10_fiducial_constraints.ipynb).
+
+## Code
 
 The dependencies of the code are listed in [environments.yml](environment.yml).
 
-The [notebooks](notebooks/) folder contains various Jupyter notebooks that reproduce the plots in the paper. Additionally, [notebooks/00_dP_dz.ipynb](notebooks/00_dP_dz.ipynb) describes how to extract the differential conversion probability dP/dz for various scenarios and choices of the underlying matter distribution explored in the paper.
-
-The data points for the fiducial constraints presented in the paper are provided in [data/constraints](data/constraints), and a notebook accessing these is provided in [notebooks/10_fiducial_constraints.ipynb](notebooks/10_fiducial_constraints.ipynb).
+The [notebooks](notebooks/) folder contains various Jupyter notebooks that reproduce the plots in the paper. Additionally, [00_dP_dz.ipynb](notebooks/00_dP_dz.ipynb) describes how to extract the differential conversion probability dP/dz for various scenarios and choices of the underlying matter distribution explored in the paper.
 
 ## Authors
 

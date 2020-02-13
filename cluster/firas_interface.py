@@ -10,6 +10,8 @@ from grf.grf import FIRAS
 from grf.pk_interp import PowerSpectrumGridInterpolator
 from grf.units import *
 
+output_dir = "/scratch/sm8383/chi2_arys/firas_dp_scan_"
+# output_dir = "/tigress/smsharma/chi2_arys/firas_dp_scan_"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--tag", action="store", dest="tag", default="test", type=str)
@@ -80,8 +82,7 @@ for i_m_A, m_A in enumerate(tqdm(m_A_ary)):
 
 limit = np.nan_to_num(firas.get_lim(delta_chi2_ary), nan=2.)
 
-np.savez("/scratch/sm8383/chi2_arys/firas_dp_scan_" + tag, 
-# np.savez("/tigress/smsharma/chi2_arys/firas_dp_scan_" + tag, 
+np.savez(output_dir + tag, 
         delta_chi2_ary=delta_chi2_ary,
         limit=limit,
         m_A_ary=m_A_ary)

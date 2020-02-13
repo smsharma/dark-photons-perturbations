@@ -16,7 +16,7 @@ from grf.units import *
 
 
 class GaussianRandomFieldBoxes:
-    def __init__(self, z_fid=20, z_range=[15, 25], k_max=0.1, n_points=100, r_filter=2., eps=1e-6, omega=5.9e-6 * eV, z_dep_P=True, cosmo=None, A_s=2.105e-9, use_nbodykit=True, generate_1d=False, log_pk_interp=None, seed=None):
+    def __init__(self, z_fid=20, z_range=[15, 25], k_max=0.1, n_points=100, r_filter=2., eps=1e-6, omega=5.9e-6 * eV, z_dep_P=True, cosmo=None, A_s=2.105e-9, use_nbodykit=True, generate_1d=False, log_pk_interp=None):
         """
         :param z_fid: Fiducial redshift
         :param z_range: Range of redshifts to stack boxes over
@@ -56,13 +56,6 @@ class GaussianRandomFieldBoxes:
 
         self.log_pk_interp = log_pk_interp
 
-        if seed is None:
-            self.seed = np.random.randint(1, 1e8)
-        else:
-            self.seed = seed
-
-        np.random.seed(self.seed)
-        
         self.get_box_properties()
         self.simulate_grf()
         self.calculate_transition_prob()
@@ -155,7 +148,7 @@ class GaussianRandomFieldBoxes:
             spacing_size = self.delta_d_comoving_ary[i_b] / self.n_points_ary[i_b]  # Real-space spacing
 
             if self.use_nbodykit:
-                mesh = LinearMesh(pk_interp_b, Nmesh=self.n_points_ary[i_b], BoxSize=self.delta_d_comoving_ary[i_b], seed=seed)
+                mesh = LinearMesh(pk_interp_b, Nmesh=self.n_points_ary[i_b], BoxSize=self.delta_d_comoving_ary[i_b])
                 
                 # Apply tophat filter if needed
                 if self.r_filter == 0:

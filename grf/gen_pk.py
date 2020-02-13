@@ -2,6 +2,8 @@ from classy import Class
 import numpy as np
 import argparse
 
+output_dir = "/scratch/sm8383/pk_arys/"
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--iz_compute", action="store", dest="iz_compute", default=20, type=int)
 
@@ -57,7 +59,7 @@ Pk_b_ary = P_s * (delta_b_ary) ** 2 / (k_ary ** 3 / (2 * np.pi ** 2)) * h **3
 Pk_tot_lin_ary = np.array([M.pk_lin(k, z_compute) * h ** 3 for k in k_ary])
 Pk_tot_nonlin_ary = np.array([M.pk(k, z_compute) * h ** 3 for k in k_ary])
 
-np.savez("/scratch/sm8383/pk_arys/p_k_k_max_5000_z_" + str(iz_compute), 
+np.savez(output_dir + "p_k_k_max_5000_z_" + str(iz_compute), 
     k_ary=k_ary / h,  # Convert back to h / Mpc
     Pk_b_ary=Pk_b_ary,
     # Pk_chi_ary=Pk_chi_ary,

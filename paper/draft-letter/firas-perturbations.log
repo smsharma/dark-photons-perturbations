@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.2.6)  12 FEB 2020 12:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.2.6)  12 FEB 2020 12:36
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -593,7 +593,17 @@ Package pdftex.def Info: plots/limit_DP_DM_k_max.pdf  used on input line 305.
  [9 </Users/smsharma/PycharmProjects/spectral_distortions_perturbations/paper/draft-letter/plots/limit_dp_dm_pdf_tails.pdf> </Users/smsharma/PycharmProjects/spectral_distortions_perturbations/paper/draft-letter/plots/limit_dp_dm_pdfs.pdf
 
 pdfTeX warning: pdflatex (file /Users/smsharma/PycharmProjects/spectral_distortions_perturbations/paper/draft-letter/plots/limit_dp_dm_pdfs.pdf): PDF inclusion: multiple pdfs with page group included in a single page
->] (/Users/smsharma/PycharmProjects/spectral_distortions_perturbations/paper/draft-letter/firas-perturbations.bbl [10 </Users/smsharma/PycharmProjects/spectral_distortions_perturbations/paper/draft-letter/plots/limit_dp_k_max.pdf> </Users/smsharma/PycharmProjects/spectral_distortions_perturbations/paper/draft-letter/plots/limit_DP_DM_k_max.pdf
+>]
+Underfull \hbox (badness 1107) in paragraph at lines 329--330
+\OT1/cmr/m/n/10 con-ver-sions for the low-est masses ac-ces-si-ble to our
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 329--330
+
+ []
+
+(/Users/smsharma/PycharmProjects/spectral_distortions_perturbations/paper/draft-letter/firas-perturbations.bbl [10 </Users/smsharma/PycharmProjects/spectral_distortions_perturbations/paper/draft-letter/plots/limit_dp_k_max.pdf> </Users/smsharma/PycharmProjects/spectral_distortions_perturbations/paper/draft-letter/plots/limit_DP_DM_k_max.pdf
 
 pdfTeX warning: pdflatex (file /Users/smsharma/PycharmProjects/spectral_distortions_perturbations/paper/draft-letter/plots/limit_DP_DM_k_max.pdf): PDF inclusion: multiple pdfs with page group included in a single page
 >]
@@ -677,13 +687,13 @@ Package rerunfilecheck Info: File `firas-perturbations.out' has not changed.
 Here is how much of TeX's memory you used:
  14247 strings out of 481248
  249521 string characters out of 5918199
- 562220 words of memory out of 5000000
+ 562226 words of memory out of 5000000
  29135 multiletter control sequences out of 15000+600000
  544360 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 35i,20n,45p,1985b,1114s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 35i,20n,45p,1991b,1114s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/fontawesomeone.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/fontawesometwo.enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/FontAwesome.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on /Users/smsharma/PycharmProjects/spectral_distortions_perturbations/paper/draft-letter/firas-perturbations.pdf (12 pages, 1217068 bytes).
+Output written on /Users/smsharma/PycharmProjects/spectral_distortions_perturbations/paper/draft-letter/firas-perturbations.pdf (12 pages, 1217874 bytes).
 PDF statistics:
  1162 PDF objects out of 1200 (max. 8388607)
  1061 compressed objects within 11 object streams

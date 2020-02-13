@@ -267,10 +267,10 @@ class PerturbedProbability(TransitionProbabilities):
         :param b: Bias parameter for lognormal pdf
         :param Ap_DM: Dark photon dark matter case
         :param x_e_ary: An optional custom ionization fraction array of same length at z_ary
-        :param eng_weight: Weight dP/dz by m_Ap**2/m_A_sq, for dark photon -> photon energy injection case. 
+        :param eng_weight: Weight dP/dz by m_Ap ** 2 / m_A_sq, for dark photon -> photon energy injection case. 
         :param r_smooth: Smoothing scale, by default no smoothing
         :param return_pdf: Whether to return pdf
-        :return: dP_dz_ary, sigma_sq_ary, (optionally) pdf_ary
+        :return: dP_dz_ary, sigma_sq_ary (in natural units), (optionally) pdf_ary
         """ 
 
         z_mesh, omega_res_mesh = np.meshgrid(z_ary, omega)
