@@ -20,6 +20,8 @@ A dark photon may kinetically mix with the ordinary photon, inducing oscillation
 
 The data points for the fiducial constraints presented in the paper are provided in [data/constraints](data/constraints), and a Jupyter notebook plotting these is provided in [10_fiducial_constraints.ipynb](notebooks/10_fiducial_constraints.ipynb).
 
+![Constraints on dark photons and dark photon dark matter.](paper/draft-letter/plots/results_web.png)
+
 ## Code
 
 The dependencies of the code are listed in [environments.yml](environment.yml).
@@ -33,7 +35,7 @@ The [notebooks](notebooks/) folder contains various Jupyter notebooks that repro
 -  Siddharth Mishra-Sharma; sm8383 at nyu dot edu
 -  Joshua T. Ruderman; ruderman at nyu dot edu
 
-## References
+## Citation
 
 If you use this code, please cite our paper:
 
