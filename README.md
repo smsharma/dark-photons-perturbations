@@ -35,7 +35,7 @@ The [notebooks](notebooks/) folder contains various Jupyter notebooks that repro
 -  Siddharth Mishra-Sharma; sm8383 at nyu dot edu
 -  Joshua T. Ruderman; ruderman at nyu dot edu
 
-## References
+## Citation
 
 If you use this code, please cite our paper:
 
