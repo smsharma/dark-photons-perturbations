@@ -7,7 +7,7 @@ by Andrea Caputo, Hongwan Liu, Siddharth Mishra-Sharma, and Joshua T. Ruderman.
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Dark Photons](https://img.shields.io/badge/Photons-Dark-black.svg)](./)
 [![Dark Matter](https://img.shields.io/badge/Matter-Dark-black.svg)](./)
-[![arXiv](https://img.shields.io/badge/arXiv-2002.xxxxx%20-green.svg)](https://arxiv.org/abs/2002.xxxxx)
+[![arXiv](https://img.shields.io/badge/arXiv-2002.05165%20-green.svg)](https://arxiv.org/abs/2002.05165)
 
 ![Illustration of photon/dark photon passage through inhomogeneities.](paper/draft-letter/plots/perturbations_web.png)
 
@@ -40,7 +40,12 @@ The [notebooks](notebooks/) folder contains various Jupyter notebooks that repro
 If you use this code, please cite our paper:
 
 ```
-@article{
-    
+@misc{caputo2020dark,
+    title={Dark Photon Oscillations in Our Inhomogeneous Universe},
+    author={Andrea Caputo and Hongwan Liu and Siddharth Mishra-Sharma and Joshua T. Ruderman},
+    year={2020},
+    eprint={2002.05165},
+    archivePrefix={arXiv},
+    primaryClass={astro-ph.CO}
 }
 ```
