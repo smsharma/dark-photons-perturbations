@@ -1,35 +1,35 @@
 import numpy as np
 
 # Define units, with GeV as base unit
-GeV = 10**6;
-eV = 10**-9*GeV;
-KeV = 10**-6*GeV;
-MeV = 10**-3*GeV;
-TeV = 10**3*GeV;
+GeV = 10**6
+eV = 10**-9*GeV
+KeV = 10**-6*GeV
+MeV = 10**-3*GeV
+TeV = 10**3*GeV
 
-Sec = (1/(6.582119*10**-16))/eV;
-Kmps = 3.3356*10**-6;
-Centimeter = 5.067730716156396*10**13/GeV;
-Meter = 100*Centimeter;
-Km = 10**5*Centimeter;
-Kilogram = 5.6095883571872*10**35*eV;
-Gram = 1e-3  * Kilogram;
-Day = 86400*Sec;
-Year = 365*Day;
-KgDay = Kilogram*Day;
-amu = 1.66053892*10**-27*Kilogram;
-Mpc = 3.086*10**24*Centimeter;
-joule = Kilogram*Meter**2/Sec**2;
-erg = 1e-7*joule;
-Angstrom = 1e-10*Meter;
-Kelv = 8.62e-14 * GeV;
+Sec = (1/(6.582119*10**-16))/eV
+Kmps = 3.3356*10**-6
+Centimeter = 5.067730716156396*10**13/GeV
+Meter = 100*Centimeter
+Km = 10**5*Centimeter
+Kilogram = 5.6095883571872*10**35*eV
+Gram = 1e-3 * Kilogram
+Day = 86400*Sec
+Year = 365*Day
+KgDay = Kilogram*Day
+amu = 1.66053892*10**-27*Kilogram
+Mpc = 3.086*10**24*Centimeter
+joule = Kilogram*Meter**2/Sec**2
+erg = 1e-7*joule
+Angstrom = 1e-10*Meter
+Kelv = 8.62e-14 * GeV
 k_B = 1.3806488e-16 * erg / Kelv
 barn = 1e-24 * Centimeter ** 2
 Jy = 1e-23 * erg / Sec / Centimeter ** 2 / Sec ** -1
 Hz = 1 / Sec
 
 # Particle and astrophysics parameters
-M_s=1.99*10**30*(Kilogram)
+M_s = 1.99*10**30*(Kilogram)
 
 # Some conversions
 kpc = 1.e-3*Mpc

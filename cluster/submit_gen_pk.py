@@ -1,9 +1,10 @@
 
-import sys, os
+import sys
+import os
 import random
 import numpy as np
 
-batch='''#!/bin/bash
+batch = '''#!/bin/bash
 #SBATCH -N 1   # node count
 #SBATCH --ntasks-per-node=1
 #SBATCH -t 2:00:00
@@ -17,13 +18,25 @@ cd /home/sm8383/spectral_distortions_perturbations/cluster
 
 '''
 
+# iz_compute_ary = np.arange(500)
+
+# for iz_compute in iz_compute_ary:
+#     batchn = batch + "\n"
+#     batchn += "python gen_pk.py --iz_compute " + str(iz_compute)
+#     fname = "batch/z_compute_" + str(iz_compute) + ".batch"
+#     f = open(fname, "w")
+#     f.write(batchn)
+#     f.close()
+#     os.system("chmod +x " + fname)
+#     os.system("sbatch " + fname)
+
 iz_compute_ary = np.arange(500)
 
 for iz_compute in iz_compute_ary:
-    batchn = batch  + "\n"
-    batchn += "python gen_pk.py --iz_compute " + str(iz_compute)
-    fname = "batch/z_compute_" + str(iz_compute) + ".batch" 
-    f=open(fname, "w")
+    batchn = batch + "\n"
+    batchn += "python gen_pk_with_chi.py --iz_compute " + str(iz_compute)
+    fname = "batch/z_compute_" + str(iz_compute) + ".batch"
+    f = open(fname, "w")
     f.write(batchn)
     f.close()
     os.system("chmod +x " + fname)

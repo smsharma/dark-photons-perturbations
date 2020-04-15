@@ -8,8 +8,9 @@ by Andrea Caputo, Hongwan Liu, Siddharth Mishra-Sharma, and Joshua T. Ruderman.
 [![Dark Photons](https://img.shields.io/badge/Photons-Dark-yellowgreen.svg)](./)
 [![Dark Matter](https://img.shields.io/badge/Matter-Dark-black.svg)](./)
 [![arXiv](https://img.shields.io/badge/arXiv-2002.05165%20-green.svg)](https://arxiv.org/abs/2002.05165)
+[![arXiv](https://img.shields.io/badge/arXiv-2004.xxxxx%20-green.svg)](https://arxiv.org/abs/2002.xxxxx)
 
-![Illustration of photon/dark photon passage through inhomogeneities.](paper/draft-letter/plots/perturbations_web.png)
+![Illustration of photon/dark photon passage through inhomogeneities.](notebooks/animations/simulation_animation.gif)
 
 
 ## Abstract
@@ -26,7 +27,7 @@ The data points for the fiducial constraints presented in the paper are provided
 
 The dependencies of the code are listed in [environments.yml](environment.yml).
 
-The [notebooks](notebooks/) folder contains various Jupyter notebooks that reproduce the plots in the paper. Additionally, [00_dP_dz.ipynb](notebooks/00_dP_dz.ipynb) describes how to extract the differential conversion probability dP/dz for various scenarios and choices of the underlying matter distribution explored in the paper.
+The [notebooks](notebooks/) folder contains various Jupyter notebooks that reproduce the plots in the paper. Additionally, [00_dP_dz.ipynb](notebooks/00_dP_dz.ipynb) describes how to extract the differential conversion probability dP/dz for various scenarios and choices of the underlying matter distribution explored in the papers.
 
 ## Authors
 
@@ -37,15 +38,28 @@ The [notebooks](notebooks/) folder contains various Jupyter notebooks that repro
 
 ## Citation
 
-If you use this code, please cite our paper:
+If you use this code, please cite our papers:
 
 ```
-@misc{caputo2020dark,
-    title={Dark Photon Oscillations in Our Inhomogeneous Universe},
-    author={Andrea Caputo and Hongwan Liu and Siddharth Mishra-Sharma and Joshua T. Ruderman},
-    year={2020},
-    eprint={2002.05165},
-    archivePrefix={arXiv},
-    primaryClass={astro-ph.CO}
+@article{Caputo:2020bdy,
+    author = "Caputo, Andrea and Liu, Hongwan and Mishra-Sharma, Siddharth and Ruderman, Joshua T.",
+    archivePrefix = "arXiv",
+    eprint = "2002.05165",
+    month = "2",
+    primaryClass = "astro-ph.CO",
+    title = "{Dark Photon Oscillations in Our Inhomogeneous Universe}",
+    year = "2020"
+}
+```
+
+```
+@article{Caputo:2020xyz,
+    author = "Caputo, Andrea and Liu, Hongwan and Mishra-Sharma, Siddharth and Ruderman, Joshua T.",
+    archivePrefix = "arXiv",
+    eprint = "2004.xxxxx",
+    month = "4",
+    primaryClass = "astro-ph.CO",
+    title = "{Modeling Dark Photon Oscillations in Our Inhomogeneous Universe}",
+    year = "2020"
 }
 ```

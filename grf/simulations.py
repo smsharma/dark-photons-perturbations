@@ -16,7 +16,7 @@ from grf.units import *
 
 
 class GaussianRandomFieldBoxes:
-    def __init__(self, z_fid=20, z_range=[15, 25], k_max=0.1, n_points=100, r_filter=2., eps=1e-6, omega=5.9e-6 * eV, z_dep_P=True, cosmo=None, A_s=2.105e-9, use_nbodykit=True, generate_1d=False, log_pk_interp=None):
+    def __init__(self, z_fid=20, z_range=[15, 25], k_max=0.1, n_points=100, r_filter=2., eps=1e-6, omega=5.9e-6 * eV, z_dep_P=True, cosmo=None, A_s=2.105e-9, log_pk_interp=None, run=True):
         """
         :param z_fid: Fiducial redshift
         :param z_range: Range of redshifts to stack boxes over
@@ -47,19 +47,12 @@ class GaussianRandomFieldBoxes:
         else:
             self.cosmo = cosmo
 
-        self.use_nbodykit = use_nbodykit
-        self.generate_1d = generate_1d
-
-        # If generating in 1-D need to use home-grown code
-        if self.generate_1d:
-            self.use_nbodykit = False
-
         self.log_pk_interp = log_pk_interp
 
-        self.get_box_properties()
-        self.simulate_grf()
-        self.calculate_transition_prob()
-
+        if run:
+            self.get_box_properties()
+            self.simulate_grf()
+            self.calculate_transition_prob()
 
     def get_Planck18_cosmology(self):
         """
@@ -83,7 +76,7 @@ class GaussianRandomFieldBoxes:
                               'Tcmb0': 2.7255,
                               'Neff': 3.046,
                               'm_nu': [0., 0., 0.06],
-                              'z_recomb' : 1089.80,
+                              'z_recomb': 1089.80,
                               'reference': "Planck 2018 results. VI. Cosmological Parameters, "
                                            "A&A, submitted, Table 2 (TT, TE, EE + lowE + lensing + BAO)"
                               }
@@ -115,139 +108,75 @@ class GaussianRandomFieldBoxes:
         self.n_boxes = int(np.ceil(self.ratio_n_points))
 
         # Redshift bin edges and centers of boxes to simulate
-        self.z_bins = np.linspace(self.z_range[0], self.z_range[1], self.n_boxes + 1)
+        self.z_bins = np.linspace(
+            self.z_range[0], self.z_range[1], self.n_boxes + 1)
 
         # If power spectrum a function of z grab those redshifts, otherwise only calculate at fiducial redshift
         if self.z_dep_P:
             self.z_center_ary = (self.z_bins[1:] + self.z_bins[:-1]) / 2.
+            # self.z_center_ary = self.z_bins[:-1]
         else:
-            self.z_center_ary = np.array([self.z_fid])
+            self.z_center_ary = np.array(self.n_boxes * [self.z_fid])
 
         # Comoving distance at redshift bin edges, size of each box and number of points to use to get resolution k_max
-        self.d_comoving_bins = self.cosmo.comoving_distance(self.z_bins).value / (1 / self.cosmo.h)
-        self.delta_d_comoving_ary = self.d_comoving_bins[1:] - self.d_comoving_bins[:-1]
-        self.n_points_ary = np.array(np.ceil(self.k_max * self.delta_d_comoving_ary / (2 * np.pi) / 2 ) * 2, dtype=np.int32)
+        self.d_comoving_bins = self.cosmo.comoving_distance(
+            self.z_bins).value / (1 / self.cosmo.h)
+        self.delta_d_comoving_ary = self.d_comoving_bins[1:] - \
+            self.d_comoving_bins[:-1]
+        self.n_points_ary = np.array(np.ceil(
+            self.k_max * self.delta_d_comoving_ary / (2 * np.pi)), dtype=np.int32)
 
-    def simulate_grf(self):
+    def simulate_grf(self, seeds=None):
         """ Simulate Gaussian random field and get 1-D (1 + \delta) slices through boxes
         """
 
         self.one_plus_delta_1d = []  # 1-D slice through 1 + \delta
         self.z_ary = []  # Redshift array corresponding to 1 + \delta
 
-        if self.n_boxes < 10: disable_tqdm = True
-        else: disable_tqdm = False
+        if self.n_boxes < 10:
+            disable_tqdm = True
+        else:
+            disable_tqdm = False
 
         self.fields = []
+        self.filter_sizes = []
+
+        if seeds is None:
+            seeds = [None] * self.n_boxes
 
         for z_center, i_b in tqdm_notebook(zip(self.z_center_ary, range(self.n_boxes)), total=len(self.z_center_ary), disable=disable_tqdm):
             if self.z_dep_P:
-                pk_interp_b = lambda k: 10 ** self.log_pk_interp(z_center, k)  # Interpolated baryon P(k)
+                # Interpolated baryon P(k)
+                def pk_interp_b(
+                    k): return 10 ** self.log_pk_interp(z_center, k)
             else:
-                pk_interp_b = lambda k: 10 ** self.log_pk_interp(np.mean(self.z_range), k)  # Interpolated baryon P(k)
-            spacing_size = self.delta_d_comoving_ary[i_b] / self.n_points_ary[i_b]  # Real-space spacing
+                # Interpolated baryon P(k)
+                def pk_interp_b(
+                    k): return 10 ** self.log_pk_interp(np.mean(self.z_range), k)
+            # Real-space spacing
+            self.spacing_size = self.delta_d_comoving_ary[i_b] / \
+                self.n_points_ary[i_b]
 
-            if self.use_nbodykit:
-                mesh = LinearMesh(pk_interp_b, Nmesh=self.n_points_ary[i_b], BoxSize=self.delta_d_comoving_ary[i_b])
-                
-                # Apply tophat filter if needed
-                if self.r_filter == 0:
-                    mesh_smooth = mesh
-                    self.filter_size = 0.
-                else:
-                    self.filter_size = self.r_filter * spacing_size
-                    mesh_smooth = mesh.apply(TopHat(self.filter_size)).paint()
-                print(self.filter_size)
-                self.field = mesh_smooth.preview()
-                self.fields.append(self.field)
-                self.one_plus_delta_1d += [list(self.field[0, int(np.round(self.n_points_ary[i_b] / 2)), :])]
+            mesh = LinearMesh(
+                pk_interp_b, Nmesh=self.n_points_ary[i_b], BoxSize=self.delta_d_comoving_ary[i_b], seed=seeds[i_b])
+
+            # Apply tophat filter if needed
+            if self.r_filter == 0:
+                mesh_smooth = mesh
+                self.filter_size = 0.
             else:
-                if not self.generate_1d:
-                    shape = np.array(3 * [self.n_points_ary[i_b]])
-                    delta = self.generate_field(self.distrib, lambda k: pk_interp_b(k), shape, unit_length=spacing_size, filt_size=self.r_filter * spacing_size)
-                    field = 1 + delta
-                    self.one_plus_delta_1d += [list(field[0, int(np.round(self.n_points_ary[i_b] / 2)), :])]
-                else:
-                    shape = np.array([self.n_points_ary[i_b]])
-                    delta = self.generate_field(self.distrib, lambda k: k ** 2 * pk_interp_b(k) / (2 * np.pi), shape, unit_length=spacing_size, filt_size=self.r_filter * spacing_size)
-                    field = 1 + delta
-                    self.one_plus_delta_1d += [list(field)]
+                self.filter_size = self.r_filter * self.spacing_size
+                mesh_smooth = mesh.apply(TopHat(self.filter_size)).paint()
+            self.filter_sizes.append(self.filter_size)
+            self.field = mesh_smooth.preview()
+            self.fields.append(self.field)
+            self.one_plus_delta_1d += [
+                list(self.field[0, int(np.round(self.n_points_ary[i_b] / 2)), :])]
 
-            
-            d_comov_ary = np.linspace(self.d_comoving_bins[i_b], self.d_comoving_bins[i_b + 1], self.n_points_ary[i_b])
-            self.z_ary += [[z_at_value(self.cosmo.comoving_distance, d / self.cosmo.h * u.Mpc, zmax=1e5) for d in d_comov_ary]]
-
-    def generate_field(self, statistic, power_spectrum, shape, unit_length=1, filt_size=0):
-        """
-        Generates a field given a statistic and a power_spectrum.
-        Parameters
-        ----------
-        statistic: callable
-            A function that takes returns a random array of a given signature,
-            with signature (s) -> (B) with B.shape == s. Please note that the
-            distribution is in *Fourier space* not in real space, unless you set
-            stat_real=True. See the note below for more details.
-        power_spectrum: callable
-            A function that returns the power contained in a given mode,
-            with signature (k) -> P(k) with k.shape == (ndim, n)
-        shape: tuple
-            The shape of the output field
-        unit_length: float, optional
-            How much physical length represent 1pixel. For example a value of 10
-            mean that each pixel stands for 10 physical units. It has the
-            dimension of a physical_unit/pixel.
-        Returns
-        -------
-        field: a real array of shape `shape` following the statistic
-            with the given power_spectrum
-        Note
-        ----
-        When generation the distribution in Fourier mode, the result
-        should be complex and unitary. Only the phase is random.
-        """
-        
-        # Compute the k grid
-        all_k = [np.fft.fftfreq(s, d=unit_length) for s in shape[:-1]] + \
-                [np.fft.rfftfreq(shape[-1], d=unit_length)]
-
-        kgrid = np.meshgrid(*all_k, indexing='ij')
-        knorm = 2 * np.pi * np.sqrt(np.sum(np.power(kgrid, 2), axis=0))
-            
-        fourier_shape = knorm.shape
-        
-        vol = np.prod(np.array(shape) * unit_length)
-        scale_factor = vol
-
-        # Draw a random sample in Fourier space
-        fftfield = statistic(fourier_shape)
-
-        power_k = np.where(knorm == 0, 0, np.sqrt(power_spectrum(knorm) / scale_factor))
-        
-        fftfield *= power_k[0]
-
-        if filt_size != 0:
-            tophat_k = np.where(knorm == 0, 0, self.tophat(filt_size, knorm))
-            fftfield *= tophat_k
-
-        return np.prod(shape) * np.fft.irfftn(fftfield)
-
-    def distrib(self, shape):
-        # Build a unit-distribution of complex numbers with random phase
-        a = np.random.normal(loc=0, scale=1, size=shape)
-        b = np.random.normal(loc=0, scale=1, size=shape)
-        return (a + 1.j * b)/np.sqrt(2)
-
-    def distrib_real(self, shape):
-        # Build a unit-distribution of complex numbers with random phase
-        a = np.random.normal(loc=0, scale=1, size=shape)
-        return a
-        
-    def tophat(self, r, knorm):
-        knorm = np.array(knorm)
-        kr = knorm * r
-        w = 3 * (np.sin(kr) / kr **3 - np.cos(kr) / kr ** 2)
-        w[knorm == 0] = 1.0
-        return w
+            d_comov_ary = np.linspace(
+                self.d_comoving_bins[i_b], self.d_comoving_bins[i_b + 1], self.n_points_ary[i_b])
+            self.z_ary += [[z_at_value(self.cosmo.comoving_distance,
+                                       d / self.cosmo.h * u.Mpc, zmax=1e5) for d in d_comov_ary]]
 
     def calculate_transition_prob(self):
         """ Calculate A' -> A transition probabilities
@@ -277,6 +206,36 @@ class GaussianRandomFieldBoxes:
         self.P_homo = AO.P_homo
         self.m_A_fid = AO.m_A_fid
 
+    def calculate_transition_prob_custom(self, one_plus_delta_1d):
+        """ Calculate A' -> A transition probabilities
+        """
+
+        # Initialize transition probabilities class
+        AO = AnisotropicOscillations()
+        self.z_crossings_collect_temp = []
+        self.P_collect_temp = []
+        self.z_ary_new = []
+        self.m_A_perturb_ary = []
+        self.m_A_sq_perturb_ary = []
+        self.m_A_sq_ary = []
+
+        # Loop over boxes and get crossings and transition probabilities
+
+        for i_b in range(self.n_boxes):
+            AO.get_m_A_perturb(z_fid=self.z_fid, omega=self.omega, z_ary=self.z_ary[i_b],
+                               one_plus_delta_ary=np.nan_to_num(one_plus_delta_1d[i_b]))
+            AO.get_crossings_and_derivatives()
+            AO.get_P_ary(eps=self.eps, omega=self.omega)
+            self.z_crossings_collect_temp += list(AO.z_crossings_ary)
+            self.P_collect_temp += list(AO.P_ary)
+            self.m_A_perturb_ary += list(AO.m_A_perturb_ary)
+            self.m_A_sq_perturb_ary += list(AO.m_A_sq_perturb_ary)
+            self.m_A_sq_ary += list(AO.m_A_sq_ary)
+            self.z_ary_new += list(AO.z_ary_new)
+
+        self.P_homo = AO.P_homo
+        self.m_A_fid = AO.m_A_fid
+
 
 class AnisotropicOscillations(TransitionProbabilities):
     def __init__(self, cosmo=None, z_reio=7.82):
@@ -289,39 +248,37 @@ class AnisotropicOscillations(TransitionProbabilities):
         self.z_ary_new = z_ary
         self.one_plus_delta_ary = one_plus_delta_ary
         self.m_A_fid = np.sqrt(self.m_A_sq(z_fid, omega))
-        self.m_A_sq_ary = np.array([(self.m_A_sq(z, omega)) for z in self.z_ary_new])
+        self.m_A_sq_ary = self.m_A_sq(np.array(self.z_ary_new), omega)
         self.m_A_ary = np.sqrt(self.m_A_sq_ary)
-        self.m_A_perturb_ary = self.m_A_ary * np.sqrt(np.nan_to_num(self.one_plus_delta_ary))
+        self.m_A_perturb_ary = self.m_A_ary * \
+            np.sqrt(np.nan_to_num(self.one_plus_delta_ary))
+        self.m_A_sq_perturb_ary = self.m_A_sq_ary * \
+            (np.nan_to_num(self.one_plus_delta_ary))
 
     def get_crossings_and_derivatives(self):
         """ Locate redshift of crossings and derivatives at crossings
         """
 
-        z_crossings_ary = []
-        d_log_m_A_sq_dz_ary = []
         dz = self.z_ary_new[1] - self.z_ary_new[0]
 
-        for iz, z in enumerate(self.z_ary_new[:-1]):
-            if (self.m_A_perturb_ary[iz] < self.m_A_fid and self.m_A_perturb_ary[iz + 1] > self.m_A_fid) \
-                    or (self.m_A_perturb_ary[iz] > self.m_A_fid and self.m_A_perturb_ary[iz + 1] < self.m_A_fid):
-                z_crossings_ary.append(np.interp(self.m_A_fid, [self.m_A_perturb_ary[iz], self.m_A_perturb_ary[iz + 1]],
-                                                 [self.z_ary_new[iz], self.z_ary_new[iz + 1]]))
-                d_log_m_A_sq_dz_ary.append(
-                    (np.log(self.m_A_perturb_ary[iz + 1] ** 2) - np.log(self.m_A_perturb_ary[iz] ** 2)) / dz)
+        zero_crossings_idxs = np.where(
+            np.diff(np.sign(np.array(self.m_A_perturb_ary) - self.m_A_fid)))[0]
+        self.z_crossings_ary = np.take(
+            self.z_ary_new, np.array(zero_crossings_idxs))
 
-        self.d_log_m_A_sq_dz_homo = None
+        self.d_log_m_A_sq_dz_ary = (np.log(self.m_A_perturb_ary[zero_crossings_idxs + 1] ** 2) - np.log(
+            self.m_A_perturb_ary[zero_crossings_idxs] ** 2)) / dz
 
-        for iz, z in enumerate(self.z_ary_new[:-1]):
-            if (self.m_A_ary[iz] < self.m_A_fid and self.m_A_ary[iz + 1] > self.m_A_fid) \
-                    or (self.m_A_ary[iz] > self.m_A_fid and self.m_A_ary[iz + 1] < self.m_A_fid):
-                self.z_crossing_homo = np.interp(self.m_A_fid, [self.m_A_ary[iz], self.m_A_ary[iz + 1]],
-                                                 [self.z_ary_new[iz], self.z_ary_new[iz + 1]])
-                self.d_log_m_A_sq_dz_homo = (np.log(self.m_A_ary[iz + 1] ** 2) - np.log(self.m_A_ary[iz] ** 2)) / dz
+        zero_crossings_homo_idxs = np.where(
+            np.diff(np.sign(np.array(self.m_A_ary) - self.m_A_fid)))[0]
 
-                continue
+        if not len(zero_crossings_homo_idxs) == 0:
+            self.z_crossing_homo = self.z_ary_new[zero_crossings_homo_idxs[0]]
 
-        self.z_crossings_ary = np.array(z_crossings_ary)
-        self.d_log_m_A_sq_dz_ary = np.array(d_log_m_A_sq_dz_ary)
+            self.d_log_m_A_sq_dz_homo = (
+                np.log(self.m_A_ary[zero_crossings_homo_idxs + 1] ** 2) - np.log(self.m_A_ary[zero_crossings_homo_idxs] ** 2)) / dz
+        else:
+            self.z_crossing_homo = self.d_log_m_A_sq_dz_homo = None
 
     def get_P_ary(self, eps, omega):
         """ Get transition probabilities
@@ -329,10 +286,12 @@ class AnisotropicOscillations(TransitionProbabilities):
 
         # Transition probabilities
         self.P_ary = np.pi * self.m_A_fid ** 2 * eps ** 2 / omega * \
-                     np.abs((self.d_log_m_A_sq_dz_ary * self.dz_dt(self.z_crossings_ary)) ** -1)
+            np.abs((self.d_log_m_A_sq_dz_ary *
+                    self.dz_dt(self.z_crossings_ary)) ** -1)
 
         # If range corresponds to homogeneous crossing, get that probability
         self.P_homo = None
         if self.d_log_m_A_sq_dz_homo is not None:
             self.P_homo = np.pi * self.m_A_fid ** 2 * eps ** 2 / omega * \
-                          np.abs((self.d_log_m_A_sq_dz_homo * self.dz_dt(self.z_crossing_homo)) ** -1)
+                np.abs((self.d_log_m_A_sq_dz_homo *
+                        self.dz_dt(self.z_crossing_homo)) ** -1)
