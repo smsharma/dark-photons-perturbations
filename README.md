@@ -1,7 +1,7 @@
 # Dark Photon Oscillations in Our Inhomogeneous Universe
 
-Code repository for the paper
-**Dark Photon Oscillations in Our Inhomogeneous Universe**
+Code repository for the papers
+**Dark Photon Oscillations in Our Inhomogeneous Universe** and **Modeling Dark Photon Oscillations in Our Inhomogeneous Universe**
 by Andrea Caputo, Hongwan Liu, Siddharth Mishra-Sharma, and Joshua T. Ruderman.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)
@@ -40,7 +40,7 @@ The [notebooks](notebooks/) folder contains various Jupyter notebooks that repro
 
 If you use this code, please cite our papers:
 
-Constraints on dark photons and dark photon dark matter:
+1. Constraints on dark photons and dark photon dark matter:
 
 ```
 @article{Caputo:2020bdy,
@@ -54,7 +54,7 @@ Constraints on dark photons and dark photon dark matter:
 }
 ```
 
-Formalism and methodology:
+2. Formalism and methodology:
 
 ```
 @article{Caputo:2020rnx,
