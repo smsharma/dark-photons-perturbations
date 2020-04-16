@@ -8,7 +8,7 @@ by Andrea Caputo, Hongwan Liu, Siddharth Mishra-Sharma, and Joshua T. Ruderman.
 [![Dark Photons](https://img.shields.io/badge/Photons-Dark-yellowgreen.svg)](./)
 [![Dark Matter](https://img.shields.io/badge/Matter-Dark-black.svg)](./)
 [![arXiv](https://img.shields.io/badge/arXiv-2002.05165%20-green.svg)](https://arxiv.org/abs/2002.05165)
-[![arXiv](https://img.shields.io/badge/arXiv-2004.xxxxx%20-green.svg)](https://arxiv.org/abs/2002.xxxxx)
+[![arXiv](https://img.shields.io/badge/arXiv-2004.06733%20-green.svg)](https://arxiv.org/abs/2002.xxxxx)
 
 ![Illustration of photon/dark photon passage through inhomogeneities.](notebooks/animations/simulation_animation.gif)
 
@@ -40,6 +40,8 @@ The [notebooks](notebooks/) folder contains various Jupyter notebooks that repro
 
 If you use this code, please cite our papers:
 
+Constraints on dark photons and dark photon dark matter:
+
 ```
 @article{Caputo:2020bdy,
     author = "Caputo, Andrea and Liu, Hongwan and Mishra-Sharma, Siddharth and Ruderman, Joshua T.",
@@ -52,11 +54,13 @@ If you use this code, please cite our papers:
 }
 ```
 
+Formalism and methodology:
+
 ```
-@article{Caputo:2020xyz,
+@article{Caputo:2020rnx,
     author = "Caputo, Andrea and Liu, Hongwan and Mishra-Sharma, Siddharth and Ruderman, Joshua T.",
     archivePrefix = "arXiv",
-    eprint = "2004.xxxxx",
+    eprint = "2004.06733",
     month = "4",
     primaryClass = "astro-ph.CO",
     title = "{Modeling Dark Photon Oscillations in Our Inhomogeneous Universe}",
