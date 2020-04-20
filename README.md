@@ -8,7 +8,7 @@ by Andrea Caputo, Hongwan Liu, Siddharth Mishra-Sharma, and Joshua T. Ruderman.
 [![Dark Photons](https://img.shields.io/badge/Photons-Dark-yellowgreen.svg)](./)
 [![Dark Matter](https://img.shields.io/badge/Matter-Dark-black.svg)](./)
 [![arXiv](https://img.shields.io/badge/arXiv-2002.05165%20-green.svg)](https://arxiv.org/abs/2002.05165)
-[![arXiv](https://img.shields.io/badge/arXiv-2004.06733%20-green.svg)](https://arxiv.org/abs/2002.xxxxx)
+[![arXiv](https://img.shields.io/badge/arXiv-2004.06733%20-green.svg)](https://arxiv.org/abs/2004.06733)
 
 ![Illustration of photon/dark photon passage through inhomogeneities.](notebooks/animations/simulation_animation.gif)
 
@@ -19,7 +19,7 @@ A dark photon may kinetically mix with the ordinary photon, inducing oscillation
 
 ## Main Results
 
-The data points for the fiducial constraints presented in the paper are provided in [data/constraints](data/constraints), and a Jupyter notebook plotting these is provided in [10_fiducial_constraints.ipynb](notebooks/10_fiducial_constraints.ipynb).
+The data points for the fiducial constraints presented in Paper I are provided in [data/constraints](data/constraints), and a Jupyter notebook plotting these is provided in [10_fiducial_constraints.ipynb](notebooks/10_fiducial_constraints.ipynb).
 
 ![Constraints on dark photons and dark photon dark matter.](paper/draft-letter/plots/results_web.png)
 
@@ -27,7 +27,7 @@ The data points for the fiducial constraints presented in the paper are provided
 
 The dependencies of the code are listed in [environments.yml](environment.yml).
 
-The [notebooks](notebooks/) folder contains various Jupyter notebooks that reproduce the plots in the paper. Additionally, [00_dP_dz.ipynb](notebooks/00_dP_dz.ipynb) describes how to extract the differential conversion probability dP/dz for various scenarios and choices of the underlying matter distribution explored in the papers.
+The [notebooks](notebooks/) folder contains various Jupyter notebooks that reproduce the plots in the two papers. Additionally, [00_dP_dz.ipynb](notebooks/00_dP_dz.ipynb) describes how to extract the differential conversion probability dP/dz for various scenarios and choices of the underlying matter distribution explored in the papers.
 
 ## Authors
 
