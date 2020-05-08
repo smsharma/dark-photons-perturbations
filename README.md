@@ -19,7 +19,7 @@ A dark photon may kinetically mix with the ordinary photon, inducing oscillation
 
 ## Main Results
 
-The data points for the fiducial constraints presented in Paper I are provided in [data/constraints](data/constraints), and a Jupyter notebook plotting these is provided in [10_fiducial_constraints.ipynb](notebooks/10_fiducial_constraints.ipynb).
+The data points for the fiducial constraints presented in Paper I are provided in [data/constraints](data/constraints), and a Jupyter notebook plotting these is provided in [10_fiducial_constraints.ipynb](notebooks/10_fiducial_constraints.ipynb). These correspond to the more conservative limit at each mass point between the log-normal and analytic PDF curves shown below.
 
 ![Constraints on dark photons and dark photon dark matter.](paper/draft-letter/plots/results_web.png)
 
