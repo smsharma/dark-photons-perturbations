@@ -21,7 +21,7 @@ A dark photon may kinetically mix with the ordinary photon, inducing oscillation
 
 The data points for the fiducial constraints presented in Paper I are provided in [data/constraints](data/constraints), and a Jupyter notebook plotting these is provided in [10_fiducial_constraints.ipynb](notebooks/10_fiducial_constraints.ipynb). These correspond to the more conservative limit at each mass point between the log-normal and analytic PDF curves shown below.
 
-_Note on mass range_: The dark photon limits are currently presented up to dark photon masses of 10⁻⁹ eV; the validity of constraints at higher masses is under investigations. For examples of additional constraints that come into play at higher masses, in particular those due to y- and μ-type distortions see, e.g., [McDermott and Witte (2020)](https://arxiv.org/abs/1911.05086).
+_Note on mass range_: The dark photon limits are currently presented up to dark photon masses of 10⁻⁹ eV; the validity of constraints at higher masses is under investigations. Although [Mirizzi et al (2009)](https://arxiv.org/abs/0901.0014) present constraints up to higher dark photon masses, additional CMB constraints---in particular those due to y- and μ-type distortions---may supplant or complement these. See [McDermott and Witte (2020)](https://arxiv.org/abs/1911.05086) for details on these.
 
 ![Constraints on dark photons and dark photon dark matter.](paper/draft-letter/plots/results_web.png)
 
